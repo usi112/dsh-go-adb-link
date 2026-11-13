@@ -1,17 +1,8 @@
-# dsh-go-adb-link · ADB 自动连接
+## 兼容性
 
-DSH Go 原生插件：自动找到手机上的 ADB TCP 端口（Stellar/Shizuku 的 TCP 通道、
-`adb tcpip`），用本机 adb 连上并保持，之后在 DSH 的 bash 里直接 `adb shell …`。
-*Native dsh-go plugin: finds the phone's ADB TCP port and keeps adb connected.*
-
-- 输入框上方状态条：`ADB 已连接 · 3455` / `ADB 未连接` / `ADB 待授权`
-- 点状态条打开面板：状态、端口、设备、adb 客户端、自动重连，按钮 `连接 / 扫描端口 / 断开 / 复制命令`
-- 引擎启动时自动重连；掉线后自动重试；手机重启后端口变了会后台重扫（10 分钟最多一次）
-- **连接成功后向 AI 注入一段提示**：需要系统级能力（appops/权限、安装卸载、读取受保护数据、截图、模拟输入、进程/电量查询等）且 adb 更省事时，AI 会**主动**用 adb，而不是绕路或先问一句
-- **提供 `adb` 工具**：AI 可直接调用（原样执行 adb 参数、自动确保连接、返回退出码/输出，并在 App 里显示成原生卡片）
-- adb 客户端缺失时（例如运行时升级重置了 `/usr`）点「连接」会 `apt-get install -y adb` 自动补回
-
-只适用于 **DSH Go 手机版（本机引擎）**：它要能从手机自己的 Ubuntu 环境里连到本机 adbd。
+- 适配 **DSH Go 1.0.16**（引擎 `r15-dsh0.2.2-rc.1-node24.22.1`，Android arm64）。
+- 1.0.16 新增了「本机 ADB shell 工具」和「Shizuku/本机 ADB 自更新」，两者都会碰到 adbd；实测升级后本插件的 `127.0.0.1:3455` 通道会自动恢复，`lastError` 为空，无需重连或重装。
+- 1.0.15 可用；更早的版本没有验证。
 
 ## 安装
 
